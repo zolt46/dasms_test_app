@@ -211,7 +211,7 @@
             <button class="action-button" onclick="location.href='user_main.html'">
                 메인으로 이동
             </button>
-            <button class="action-button" onclick="location.href='start.html'">
+            <button class="action-button" onclick="location.href='index.html'">
                 로그아웃
             </button>
         </div>
@@ -274,7 +274,7 @@
         function updateCountdown() {
             countdownElement.textContent = countdown;
             if (countdown === 0) {
-                window.location.href = 'start.html'; // 로그인 페이지로 이동
+                window.location.href = 'index.html'; // 로그인 페이지로 이동
             } else {
                 countdown--;
                 setTimeout(updateCountdown, 1000);
