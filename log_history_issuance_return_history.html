@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>불출/반납 이력 상세 조회 - DASMS</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 800px; /* Wider for tables */
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #7D5A3D;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .search-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #3F4B43;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-controls input,
+        .search-controls select,
+        .search-controls button {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            background-color: #4A5B52;
+            color: #E6E6E6;
+            font-size: 1em;
+        }
+
+        .search-controls input::placeholder {
+            color: #BBB;
+        }
+
+        .search-controls button {
+            background-color: #7D5A3D;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-controls button:hover {
+            background-color: #6C4B2E;
+        }
+
+        .history-table-container {
+            width: 100%;
+            overflow-x: auto; /* For responsive tables */
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #3F4B43;
+            border-radius: 10px;
+            overflow: hidden; /* Ensures border-radius applies to table */
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 12px 15px;
+            border: 1px solid #4A5B52;
+            text-align: left;
+            font-size: 0.95em;
+        }
+
+        .history-table th {
+            background-color: #556B60;
+            color: #E6E6E6;
+            font-weight: bold;
+            white-space: nowrap; /* Prevent wrapping of headers */
+        }
+
+        .history-table tr:nth-child(even) {
+            background-color: #35413A;
+        }
+
+        .history-table tr:hover {
+            background-color: #4A5B52;
+        }
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #777;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .search-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .history-table th,
+            .history-table td {
+                padding: 8px 10px;
+                font-size: 0.85em;
+            }
+            .back-button {
+                font-size: 1.2em;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>불출/반납 이력 상세 조회</h2>
+
+        <div class="search-controls">
+            <input type="text" id="equipmentId" placeholder="장비 ID">
+            <input type="text" id="userId" placeholder="사용자 ID">
+            <select id="recordType">
+                <option value="">유형 (전체)</option>
+                <option value="issuance">불출</option>
+                <option value="return">반납</option>
+            </select>
+            <input type="date" id="startDate">
+            <span>~</span>
+            <input type="date" id="endDate">
+            <button onclick="searchHistory()">
+                <i class="fas fa-search"></i> 검색
+            </button>
+        </div>
+
+        <div class="history-table-container">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>장비 ID</th>
+                        <th>사용자 ID</th>
+                        <th>유형</th>
+                        <th>일시</th>
+                        <th>비고</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>EQ-001</td>
+                        <td>user001</td>
+                        <td>불출</td>
+                        <td>2025-07-19 10:30</td>
+                        <td>로봇 팔 사용</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>EQ-002</td>
+                        <td>user002</td>
+                        <td>반납</td>
+                        <td>2025-07-18 17:00</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>EQ-001</td>
+                        <td>user001</td>
+                        <td>반납</td>
+                        <td>2025-07-19 14:00</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>EQ-003</td>
+                        <td>user003</td>
+                        <td>불출</td>
+                        <td>2025-07-17 09:00</td>
+                        <td>측정 장비</td>
+                    </tr>
+                    </tbody>
+            </table>
+        </div>
+
+        <button class="back-button" onclick="location.href='admin_log_history.html'">
+            <i class="fas fa-arrow-left icon"></i> 뒤로가기
+        </button>
+    </div>
+
+    <script>
+        function searchHistory() {
+            const equipmentId = document.getElementById('equipmentId').value;
+            const userId = document.getElementById('userId').value;
+            const recordType = document.getElementById('recordType').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            // In a real application, you would send these values to a server
+            // to filter the data and update the table.
+            alert(`검색 조건:\n장비 ID: ${equipmentId}\n사용자 ID: ${userId}\n유형: ${recordType}\n시작일: ${startDate}\n종료일: ${endDate}\n\n(실제 애플리케이션에서는 서버에서 데이터를 필터링하여 표시합니다.)`);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>시스템 운영 로그 - DASMS</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 800px; /* Wider for log entries */
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #7D5A3D;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .log-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #3F4B43;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .log-filter input,
+        .log-filter select,
+        .log-filter button {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            background-color: #4A5B52;
+            color: #E6E6E6;
+            font-size: 1em;
+        }
+
+        .log-filter input::placeholder {
+            color: #BBB;
+        }
+
+        .log-filter button {
+            background-color: #7D5A3D;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .log-filter button:hover {
+            background-color: #6C4B2E;
+        }
+
+        .log-entries-container {
+            width: 100%;
+        }
+
+        .log-entry {
+            background-color: #3F4B43;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .log-entry .timestamp {
+            font-size: 0.9em;
+            color: #AAAAAA;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .log-entry .timestamp i {
+            margin-right: 5px;
+        }
+
+        .log-entry .log-level {
+            font-weight: bold;
+            margin-right: 10px;
+            display: inline-block;
+            min-width: 60px; /* Align content */
+        }
+
+        .log-entry.info .log-level { color: #87CEEB; /* SkyBlue */ }
+        .log-entry.warning .log-level { color: #FFD700; /* Gold */ }
+        .log-entry.error .log-level { color: #FF6347; /* Tomato */ }
+        .log-entry.critical .log-level { color: #DC3545; /* Red */ }
+
+        .log-entry .message {
+            font-size: 1em;
+            line-height: 1.5;
+            color: #E6E6E6;
+        }
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #777;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .log-filter {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .log-entry {
+                padding: 10px;
+            }
+            .log-entry .timestamp, .log-entry .message {
+                font-size: 0.9em;
+            }
+            .back-button {
+                font-size: 1.2em;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>시스템 운영 로그</h2>
+
+        <div class="log-filter">
+            <select id="logLevel">
+                <option value="">로그 레벨 (전체)</option>
+                <option value="info">정보 (INFO)</option>
+                <option value="warning">경고 (WARNING)</option>
+                <option value="error">에러 (ERROR)</option>
+                <option value="critical">심각 (CRITICAL)</option>
+            </select>
+            <input type="date" id="logStartDate">
+            <span>~</span>
+            <input type="date" id="logEndDate">
+            <input type="text" id="keyword" placeholder="키워드 검색">
+            <button onclick="filterLogs()">
+                <i class="fas fa-filter"></i> 필터 적용
+            </button>
+        </div>
+
+        <div class="log-entries-container">
+            <div class="log-entry info">
+                <div class="timestamp"><i class="far fa-clock"></i> 2025-07-20 14:35:01</div>
+                <span class="log-level">INFO</span> <span class="message">사용자 'admin'이 로그인했습니다.</span>
+            </div>
+            <div class="log-entry warning">
+                <div class="timestamp"><i class="far fa-clock"></i> 2025-07-20 14:28:10</div>
+                <span class="log-level">WARNING</span> <span class="message">데이터베이스 연결에 일시적인 지연이 발생했습니다.</span>
+            </div>
+            <div class="log-entry error">
+                <div class="timestamp"><i class="far fa-clock"></i> 2025-07-20 14:05:30</div>
+                <span class="log-level">ERROR</span> <span class="message">장비 'EQ-002' 데이터 전송 실패: 연결 시간 초과.</span>
+            </div>
+            <div class="log-entry info">
+                <div class="timestamp"><i class="far fa-clock"></i> 2025-07-20 13:59:15</div>
+                <span class="log-level">INFO</span> <span class="message">스케줄러: 일일 백업 작업이 성공적으로 완료되었습니다.</span>
+            </div>
+            <div class="log-entry critical">
+                <div class="timestamp"><i class="far fa-clock"></i> 2025-07-20 12:01:00</div>
+                <span class="log-level">CRITICAL</span> <span class="message">시스템 비정상 종료 감지. 자동 재시작 시도 중.</span>
+            </div>
+            </div>
+
+        <button class="back-button" onclick="location.href='admin_log_history.html'">
+            <i class="fas fa-arrow-left icon"></i> 뒤로가기
+        </button>
+    </div>
+
+    <script>
+        function filterLogs() {
+            const logLevel = document.getElementById('logLevel').value;
+            const startDate = document.getElementById('logStartDate').value;
+            const endDate = document.getElementById('logEndDate').value;
+            const keyword = document.getElementById('keyword').value;
+
+            // In a real application, you would send these values to a server
+            // to filter the log data and update the displayed entries.
+            alert(`로그 필터 적용 조건:\n레벨: ${logLevel}\n시작일: ${startDate}\n종료일: ${endDate}\n키워드: ${keyword}\n\n(실제 애플리케이션에서는 서버에서 로그 데이터를 필터링하여 표시합니다.)`);
+        }
+    </script>
+</body>
+</html>

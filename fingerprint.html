@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>지문 인식</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 350px;
+            width: 90%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            color: #4C9A2A;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+
+        .fingerprint-icon {
+            font-size: 8em; /* 큰 지문 아이콘 */
+            margin-bottom: 30px;
+            color: #7D5A3D; /* 브라운 악센트 색상 */
+            animation: pulse 1.5s infinite alternate; /* 지문 아이콘 맥박 효과 */
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .status-message {
+            font-size: 1em;
+            color: #E6E6E6;
+            min-height: 20px; /* 메시지 영역 확보 */
+        }
+
+        .back-button {
+            margin-top: 40px;
+            padding: 12px 25px;
+            font-size: 1em;
+            color: white;
+            background-color: #5A6D63; /* 회색 계열 버튼 */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-button:active {
+            background-color: #4A5C50;
+            transform: translateY(2px);
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .fingerprint-icon {
+                font-size: 6em;
+            }
+            p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>지문 인식</h2>
+        <div class="fingerprint-icon">
+            👉
+        </div>
+        <p id="instructionText">지문 센서에 손가락을 대주세요.</p>
+        <div class="status-message" id="fingerprintStatus">인식 대기 중...</div>
+
+        <button class="back-button" onclick="history.back()">이전 페이지로</button>
+    </div>
+
+    <script>
+        const fingerprintStatus = document.getElementById('fingerprintStatus');
+        const instructionText = document.getElementById('instructionText');
+        let recognitionAttempt = 0;
+
+        // URL 파라미터에서 모드를 가져옵니다.
+        const urlParams = new URLSearchParams(window.location.search);
+        const mode = urlParams.get('mode'); // 'user' 또는 'admin'
+
+        // 지문 인식 시도 함수
+        function simulateFingerprintScan() {
+            recognitionAttempt++;
+            fingerprintStatus.textContent = `지문 인식 시도 중... (${recognitionAttempt}회)`;
+
+            setTimeout(() => {
+                if (Math.random() > 0.3 || recognitionAttempt > 2) { // 70% 확률로 성공, 3회 이상 시도 시 성공 보장
+                    fingerprintStatus.textContent = '지문 인식 성공! ✅';
+                    fingerprintStatus.style.color = '#4C9A2A';
+                    setTimeout(() => {
+                        // 모드에 따라 다른 페이지로 이동
+                        if (mode === 'admin') {
+                            alert('관리자 지문 인식 성공! 관리자 대시보드로 이동합니다.');
+                            window.location.href = 'admin_main.html'; // 실제 관리자 메인 페이지로 변경
+                        } else { // 기본값은 사용자 모드
+                            alert('사용자 지문 인식 성공! 다음 페이지로 이동합니다.');
+                            window.location.href = 'user_main.html'; // 실제 사용자 메인 페이지로 변경
+                        }
+                    }, 1000);
+                } else {
+                    fingerprintStatus.textContent = '지문 인식 실패. 다시 시도해주세요. ❌';
+                    fingerprintStatus.style.color = '#e74c3c';
+                    setTimeout(() => {
+                        fingerprintStatus.textContent = '인식 대기 중...';
+                        fingerprintStatus.style.color = '#E6E6E6';
+                    }, 1500);
+                }
+            }, 2000); // 2초 후 결과 표시
+        }
+
+        // 페이지 로드 시 자동으로 지문 인식 시도 (실제 환경에서는 센서 입력 대기)
+        simulateFingerprintScan(); // 테스트용으로 바로 시작하려면 주석 해제
+
+        // 지시 텍스트를 모드에 따라 변경 (선택 사항)
+        if (mode === 'admin') {
+            instructionText.textContent = '관리자 지문 센서에 손가락을 대주세요.';
+        } else {
+            instructionText.textContent = '지문 센서에 손가락을 대주세요.';
+        }
+
+        // 실제 로봇 환경에서는 특정 이벤트(센서 감지)에 의해 simulateFingerprintScan 함수가 트리거될 것입니다.
+        // 현재는 개발 편의를 위해 페이지에 진입하면 자동으로 인식 시도를 시작하지 않습니다.
+        // 만약 페이지 진입 시 자동으로 인식 시뮬레이션을 시작하려면 위의 'simulateFingerprintScan();' 주석을 해제하세요.
+    </script>
+</body>
+</html>

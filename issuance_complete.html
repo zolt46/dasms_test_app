@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>불출 완료</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 500px;
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #4C9A2A;
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+
+        .complete-message {
+            color: #A0D468;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .duty-message {
+            color: #E6E6E6;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .quote-box {
+            background-color: #3F4F45;
+            border: 1px solid #4A5C50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .quote-box h3 {
+            color: #7D5A3D;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .quote-box p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #CCCCCC;
+        }
+
+        .issuance-details {
+            width: 100%;
+            margin-bottom: 30px;
+            background-color: #3F4F45;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .issuance-details h3 {
+            color: #7D5A3D;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        .issuance-details p {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .issuance-details strong {
+            color: #A0D468;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .action-button {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background-color: #5A6D63;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-button:active {
+            background-color: #4A5C50;
+            transform: translateY(2px);
+        }
+
+        .auto-redirect-message {
+            font-size: 1em;
+            color: #CCCCCC;
+            margin-top: 20px;
+        }
+
+        .countdown {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #A0D468;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .complete-message {
+                font-size: 1.3em;
+            }
+            .duty-message {
+                font-size: 1em;
+            }
+            .quote-box, .issuance-details {
+                padding: 15px;
+            }
+            .quote-box h3, .issuance-details h3 {
+                font-size: 1.1em;
+            }
+            .quote-box p, .issuance-details p {
+                font-size: 1em;
+            }
+            .action-button {
+                font-size: 1.1em;
+                padding: 12px 20px;
+            }
+            .auto-redirect-message, .countdown {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>불출 완료</h2>
+
+        <div class="complete-message">
+            총기 및/또는 탄약 불출이 완료되었습니다!
+        </div>
+        <p class="duty-message">
+            불출된 물품 소지에 각별히 주의하시고, 부여된 임무에 최선을 다해주십시오.<br>그대의 헌신이 조국을 지킵니다!
+        </p>
+
+        <div class="quote-box">
+            <h3>적의 심장부를 꿰뚫는 용기<br>그대 손에 쥐어진 조국 수호의 의지!</h3>
+            <p>오늘도 그대가 있기에<br>우리는 승리할 수 있습니다</p>
+        </div>
+
+        <div class="issuance-details">
+            <h3>불출 이력</h3>
+            <p><strong>불출된 총기:</strong> <span id="issuedGun"></span></p>
+            <p><strong>총기 번호:</strong> <span id="issuedGunNumber">N/A</span></p>
+            <p><strong>불출된 탄약:</strong> <span id="issuedAmmo"></span></p>
+            <p><strong>불출 일시:</strong> <span id="issuedDateTime"></span></p>
+            <p><strong>불출자:</strong> 홍길동 상병</p>
+            <p><strong>소속:</strong> 육군 제7보병사단</p>
+        </div>
+
+        <div class="button-group">
+            <button class="action-button" onclick="alert('불출 이력증을 출력합니다.')">
+                불출 이력증 출력
+            </button>
+            <button class="action-button" onclick="location.href='user_main.html'">
+                메인으로 이동
+            </button>
+            <button class="action-button" onclick="location.href='start.html'">
+                로그아웃
+            </button>
+        </div>
+
+        <p class="auto-redirect-message">
+            잠시 후 자동으로 <span id="countdown">10</span>초 뒤 로그인 페이지로 이동합니다.
+        </p>
+    </div>
+
+    <script>
+        // URL 파라미터에서 정보 가져오기 (예시)
+        const urlParams = new URLSearchParams(window.location.search);
+        const gunType = urlParams.get('gunType');
+        const ammoQty = urlParams.get('ammoQty'); // 탄약 수량 파라미터 가져오기
+
+        const issuedGunElement = document.getElementById('issuedGun');
+        const issuedGunNumberElement = document.getElementById('issuedGunNumber');
+        const issuedAmmoElement = document.getElementById('issuedAmmo');
+        const issuedDateTimeElement = document.getElementById('issuedDateTime');
+
+        // 불출 이력 정보 설정 (예시 데이터)
+        if (gunType) {
+            let gunName = '';
+            let gunNumber = 'N/A';
+            switch (gunType) {
+                case 'personal_rifle':
+                    gunName = 'K2 소총';
+                    gunNumber = 'AB12345'; // 예시 총기번호
+                    break;
+                case 'squad_machinegun':
+                    gunName = 'K3 기관총';
+                    gunNumber = 'CD67890'; // 예시 총기번호
+                    break;
+                case 'sidearm':
+                    gunName = 'K5 권총';
+                    gunNumber = 'EF10112'; // 예시 총기번호
+                    break;
+            }
+            issuedGunElement.textContent = gunName;
+            issuedGunNumberElement.textContent = gunNumber;
+        } else {
+            issuedGunElement.textContent = '총기 없음';
+        }
+        
+        // 탄약 수량 표시 로직 수정
+        if (ammoQty && parseInt(ammoQty) > 0) {
+            issuedAmmoElement.textContent = `${ammoQty}발`;
+        } else {
+            issuedAmmoElement.textContent = '탄약 없음';
+        }
+
+        const now = new Date();
+        const dateTimeString = `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일 ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+        issuedDateTimeElement.textContent = dateTimeString;
+
+        // 자동 리다이렉트 카운트다운
+        let countdown = 10;
+        const countdownElement = document.getElementById('countdown');
+
+        function updateCountdown() {
+            countdownElement.textContent = countdown;
+            if (countdown === 0) {
+                window.location.href = 'start.html'; // 로그인 페이지로 이동
+            } else {
+                countdown--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        window.onload = updateCountdown;
+    </script>
+</body>
+</html>

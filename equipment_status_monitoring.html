@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>장비 상태 모니터링 - DASMS</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 500px;
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #7D5A3D;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .info-section {
+            background-color: #3F4B43;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-section p {
+            margin: 10px 0;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-section p strong {
+            color: #E6E6E6;
+            margin-right: 10px;
+            min-width: 120px; /* Aligns values */
+        }
+
+        .status-dot {
+            height: 12px;
+            width: 12px;
+            background-color: green; /* Default: Online */
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .status-dot.offline {
+            background-color: red;
+        }
+
+        .status-dot.maintenance {
+            background-color: orange;
+        }
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #777;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .info-section p {
+                font-size: 1em;
+            }
+            .back-button {
+                font-size: 1.2em;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>장비 상태 모니터링</h2>
+
+        <div class="info-section">
+            <p><strong><i class="fas fa-microchip"></i> 장비 ID:</strong> EQ-001</p>
+            <p><strong><i class="fas fa-cogs"></i> 모델명:</strong> 로봇 팔 V2</p>
+            <p><strong><i class="fas fa-calendar-alt"></i> 마지막 통신:</strong> 2025-07-20 14:30:00</p>
+            <p>
+                <strong><i class="fas fa-globe"></i> 상태:</strong>
+                <span class="status-dot"></span> 온라인
+            </p>
+            <p><strong><i class="fas fa-thermometer-half"></i> 온도:</strong> 45°C</p>
+            <p><strong><i class="fas fa-bolt"></i> 전력 사용량:</strong> 250W</p>
+            <p><strong><i class="fas fa-hourglass-half"></i> 가동 시간:</strong> 1200 시간</p>
+        </div>
+
+        <div class="info-section">
+            <p><strong><i class="fas fa-microchip"></i> 장비 ID:</strong> EQ-002</p>
+            <p><strong><i class="fas fa-cogs"></i> 모델명:</strong> 자동화 컨베이어</p>
+            <p><strong><i class="fas fa-calendar-alt"></i> 마지막 통신:</strong> 2025-07-20 14:28:15</p>
+            <p>
+                <strong><i class="fas fa-globe"></i> 상태:</strong>
+                <span class="status-dot offline"></span> 오프라인
+            </p>
+            <p><strong><i class="fas fa-thermometer-half"></i> 온도:</strong> 30°C</p>
+            <p><strong><i class="fas fa-bolt"></i> 전력 사용량:</strong> 0W</p>
+            <p><strong><i class="fas fa-hourglass-half"></i> 가동 시간:</strong> 800 시간</p>
+        </div>
+        
+        <button class="back-button" onclick="location.href='admin_equipment_management.html'">
+            <i class="fas fa-arrow-left icon"></i> 뒤로가기
+        </button>
+    </div>
+</body>
+</html>

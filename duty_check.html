@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>근무 확인</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: auto; /* 내용이 길어질 경우 스크롤 가능 */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 550px;
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #4C9A2A;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .duty-info {
+            width: 100%;
+            margin-bottom: 25px;
+            background-color: #3F4F45;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .duty-info h3 {
+            color: #7D5A3D;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        .duty-info p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .duty-info strong {
+            color: #A0D468;
+        }
+
+        .duty-rules {
+            width: 100%;
+            margin-top: 25px;
+            background-color: #3F4F45;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .duty-rules h3 {
+            color: #7D5A3D;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        .duty-rules ol {
+            padding-left: 20px;
+            margin-bottom: 0;
+            color: #E6E6E6;
+        }
+
+        .duty-rules li {
+            font-size: 1em;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .back-button {
+            margin-top: 30px;
+            padding: 12px 25px;
+            font-size: 1em;
+            color: white;
+            background-color: #5A6D63;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-button:active {
+            background-color: #4A5C50;
+            transform: translateY(2px);
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .duty-info, .duty-rules {
+                padding: 15px;
+            }
+            .duty-info h3, .duty-rules h3 {
+                font-size: 1.1em;
+            }
+            .duty-info p, .duty-rules li {
+                font-size: 0.95em;
+            }
+            .back-button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>근무 확인</h2>
+
+        <div class="duty-info">
+            <h3>오늘의 근무 정보</h3>
+            <p><strong>날짜:</strong> 2025년 7월 20일</p>
+            <p><strong>오늘의 근무:</strong> 주간 경계 근무</p>
+            <p><strong>근무 시간:</strong> 09:00 ~ 17:00</p>
+            <p><strong>근무 위치:</strong> 2초소</p>
+            <p><strong>특이사항:</strong> 야간 근무자와 인수인계 철저</p>
+        </div>
+
+        <div class="duty-rules">
+            <h3>근무 투입 수칙</h3>
+            <ol>
+                <li>근무 시작 10분 전 근무지에 도착하여 장비 점검.</li>
+                <li>근무 중 휴대전화 사용을 금지하며, 비상 상황 외 이탈 금지.</li>
+                <li>이상 징후 발견 시 즉시 지휘통제실에 보고.</li>
+                <li>인수인계 시 총기 및 탄약 수량 정확히 확인.</li>
+                <li>근무 종료 후 개인 장비 정리 및 복귀 보고.</li>
+            </ol>
+        </div>
+
+        <button class="back-button" onclick="history.back()">이전 페이지로</button>
+    </div>
+</body>
+</html>

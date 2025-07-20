@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>사용자 메인 - 로봇 제어 시스템</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1F2B24; /* 대시보드 배경색과 유사하게 */
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* 스크롤바 방지 */
+            padding: 20px;
+            box-sizing: border-box; /* 패딩 포함 전체 크기 계산 */
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 500px; /* 이미지 너비에 맞춰 조정 */
+            width: 95%;
+            background-color: #2F3B33; /* 대시보드 메인 콘텐츠 배경색 */
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #4C9A2A; /* 녹색 악센트 */
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .quote-box {
+            background-color: #3F4F45; /* 살짝 다른 배경색으로 구분 */
+            border: 1px solid #4A5C50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .quote-box h3 {
+            color: #7D5A3D; /* 브라운 악센트 색상 */
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .quote-box p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #CCCCCC;
+        }
+
+        .main-menu-button {
+            width: 100%; /* 너비 100%로 설정 */
+            padding: 18px 25px;
+            margin-bottom: 15px; /* 버튼 사이 간격 */
+            font-size: 1.4em;
+            font-weight: bold;
+            color: white;
+            background-color: #5A6D63; /* 회색 계열 버튼 */
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-menu-button:last-child {
+            margin-bottom: 0; /* 마지막 버튼 아래 간격 제거 */
+        }
+
+        .main-menu-button:active {
+            background-color: #4A5C50; /* 클릭 시 색상 변화 */
+            transform: translateY(2px);
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                width: 100%; /* 모바일에서 너비 꽉 채우기 */
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .quote-box {
+                padding: 15px;
+            }
+            .quote-box h3 {
+                font-size: 1.1em;
+            }
+            .quote-box p {
+                font-size: 1em;
+            }
+            .main-menu-button {
+                font-size: 1.2em;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>DASMS</h2>
+
+        <div class="quote-box">
+            <h3>적의 심장부를 꿰뚫는 용기<br>그대 손에 쥐어진 조국 수호의 의지!</h3>
+            <p>오늘도 그대가 있기에<br>우리는 승리할 수 있습니다</p>
+        </div>
+
+        <button class="main-menu-button" onclick="location.href='user_info.html'">
+            현 사용자 정보 확인
+        </button>
+        <button class="main-menu-button" onclick="location.href='issuance_select_items.html'">
+            불출
+        </button>
+        <button class="main-menu-button" onclick="location.href='return_gun_placement.html'">
+            반납
+        </button>
+        <button class="main-menu-button" onclick="location.href='duty_check.html'">
+            근무 확인
+        </button>
+
+        <button class="back-button" onclick="location.href='start.html'" style="margin-top: 30px; padding: 10px 20px; font-size: 1em; color: white; background-color: #5A6D63; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease;">
+            로그아웃
+        </button>
+    </div>
+</body>
+</html>

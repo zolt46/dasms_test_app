@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>현 사용자 정보 확인</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 450px;
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #4C9A2A;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .user-profile {
+            margin-bottom: 25px;
+        }
+
+        .user-profile img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #7D5A3D;
+            margin-bottom: 15px;
+        }
+
+        .user-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr; /* 라벨과 값 비율 조정 */
+            gap: 12px 15px;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .user-info-grid strong {
+            color: #A0D468; /* 라벨 색상 */
+            font-size: 1.05em;
+        }
+
+        .user-info-grid span {
+            font-size: 1.05em;
+            color: #E6E6E6;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1em;
+            color: white;
+            background-color: #5A6D63;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-button:active {
+            background-color: #4A5C50;
+            transform: translateY(2px);
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .user-profile img {
+                width: 100px;
+                height: 100px;
+            }
+            .user-info-grid {
+                grid-template-columns: 1fr 2fr;
+                gap: 10px 12px;
+            }
+            .user-info-grid strong, .user-info-grid span {
+                font-size: 0.95em;
+            }
+            .back-button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>현 사용자 정보 확인</h2>
+
+        <div class="user-profile">
+            <img src="user_placeholder.png" alt="사용자 사진"> </div>
+
+        <div class="user-info-grid">
+            <strong>이름:</strong><span>홍길동</span>
+            <strong>계급:</strong><span>상병</span>
+            <strong>직책:</strong><span>소총수</span>
+            <strong>소속:</strong><span>육군 제7보병사단</span>
+            <strong>지정 총기:</strong><span>K2 소총</span>
+            <strong>총기번호:</strong><span>AB12345</span>
+            <strong>연락처:</strong><span>010-1234-5678</span>
+        </div>
+
+        <button class="back-button" onclick="history.back()">이전 페이지로</button>
+    </div>
+</body>
+</html>

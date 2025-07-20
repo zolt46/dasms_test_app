@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>긴급 개방 완료</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 500px;
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .status-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .status-message {
+            font-size: 1.2em;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background-color: #3C4A42;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            width: calc(100% - 40px);
+            text-align: left;
+        }
+
+        .info-box p {
+            margin: 8px 0;
+            font-size: 1em;
+        }
+
+        .info-box strong {
+            color: #7D5A3D; /* 강조 색상 */
+        }
+
+        .action-button {
+            background-color: #4CAF50; /* 성공 시 초록색 */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            width: 100%;
+            max-width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .action-button.error {
+            background-color: #E74C3C; /* 실패 시 붉은색 */
+        }
+
+        .action-button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        .action-button.error:hover {
+            background-color: #C0392B;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .status-icon {
+                font-size: 3.5em;
+            }
+            .status-message {
+                font-size: 1.1em;
+            }
+            .info-box {
+                padding: 15px;
+            }
+            .action-button {
+                font-size: 1.2em;
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 id="pageTitle"></h2>
+        <i id="statusIcon" class="status-icon"></i>
+        <p id="statusMessage" class="status-message"></p>
+
+        <div class="info-box">
+            <p><strong>개방 대상:</strong> <span id="cabinetTargetDisplay"></span></p>
+            <p><strong>개방 시간:</strong> <span id="openTimeDisplay"></span></p>
+            <p id="additionalMessage"></p> </div>
+
+        <button class="action-button" onclick="location.href='admin_main.html'">
+            메인으로 돌아가기
+        </button>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const cabinetId = urlParams.get('cabinetId');
+        const status = urlParams.get('status'); // 'success' 또는 'fail'
+
+        const pageTitle = document.getElementById('pageTitle');
+        const statusIcon = document.getElementById('statusIcon');
+        const statusMessage = document.getElementById('statusMessage');
+        const actionButton = document.querySelector('.action-button');
+        const cabinetTargetDisplay = document.getElementById('cabinetTargetDisplay');
+        const openTimeDisplay = document.getElementById('openTimeDisplay');
+        const additionalMessage = document.getElementById('additionalMessage');
+
+        let targetText = '';
+        if (cabinetId === 'all_cabinets') {
+            targetText = '모든 총기함';
+            additionalMessage.textContent = '모든 총기함의 잠금이 해제되었습니다.';
+        } else if (cabinetId) {
+            targetText = `총기함 ${cabinetId}`;
+            additionalMessage.textContent = `${cabinetId} 총기함의 잠금이 해제되었습니다.`;
+        } else {
+            targetText = '알 수 없음';
+            additionalMessage.textContent = '긴급 개방이 처리되었습니다.';
+        }
+        cabinetTargetDisplay.textContent = targetText;
+
+
+        const now = new Date();
+        const dateTimeString = `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일 ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+        openTimeDisplay.textContent = dateTimeString;
+
+        if (status === 'success') {
+            pageTitle.textContent = '긴급 개방 완료!';
+            statusIcon.className = 'status-icon fas fa-check-circle';
+            statusIcon.style.color = '#4CAF50'; /* 초록색 */
+            statusMessage.textContent = '긴급 개방 명령이 성공적으로 처리되었습니다.';
+            actionButton.classList.remove('error');
+            actionButton.style.backgroundColor = '#4CAF50';
+        } else {
+            pageTitle.textContent = '긴급 개방 실패';
+            statusIcon.className = 'status-icon fas fa-times-circle';
+            statusIcon.style.color = '#E74C3C'; /* 붉은색 */
+            statusMessage.textContent = '긴급 개방 명령 처리에 실패했습니다. 다시 시도해주세요.';
+            actionButton.classList.add('error');
+            actionButton.style.backgroundColor = '#E74C3C';
+        }
+
+        // 로그 기록 (실제 환경에서는 백엔드에서 수행)
+        console.log(`[긴급 개방 로그] 대상: ${targetText}, 상태: ${status}, 시간: ${dateTimeString}`);
+    </script>
+</body>
+</html>

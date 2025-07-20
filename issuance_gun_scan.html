@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>총기 불출 - 총기 확인</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 500px;
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .quote-box {
+            background-color: #3F4F45;
+            border: 1px solid #4A5C50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .quote-box h3 {
+            color: #7D5A3D;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .quote-box p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #CCCCCC;
+        }
+
+        .instruction-box {
+            background-color: #3F4F45;
+            border: 1px solid #4A5C50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .instruction-box p {
+            font-size: 1.3em;
+            color: #A0D468;
+            font-weight: bold;
+        }
+
+        .confirm-button {
+            width: 100%;
+            padding: 18px 25px;
+            font-size: 1.4em;
+            font-weight: bold;
+            color: white;
+            background-color: #5A6D63;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .confirm-button:active {
+            background-color: #4A5C50;
+            transform: translateY(2px);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            .quote-box, .instruction-box {
+                padding: 15px;
+            }
+            .quote-box h3, .instruction-box p {
+                font-size: 1.1em;
+            }
+            .quote-box p {
+                font-size: 1em;
+            }
+            .confirm-button {
+                font-size: 1.2em;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="quote-box">
+            <h3>적의 심장부를 꿰뚫는 용기<br>그대 손에 쥐어진 조국 수호의 의지!</h3>
+            <p>오늘도 그대가 있기에<br>우리는 승리할 수 있습니다</p>
+        </div>
+
+        <div class="instruction-box">
+            <p>총기 스캔 및 확인 중입니다. 잠시만 기다려주세요...</p>
+        </div>
+
+        <button class="confirm-button" id="confirmButton" style="display: none;">
+            확 인 (총기 가져가기)
+        </button>
+    </div>
+
+    <script>
+        const confirmButton = document.getElementById('confirmButton');
+        const instructionBox = document.querySelector('.instruction-box p');
+        const urlParams = new URLSearchParams(window.location.search);
+        const gunType = urlParams.get('gunType');
+        const hasAmmo = urlParams.get('ammo') === 'true'; // string "true" or "false" to boolean
+        const ammoQuantity = urlParams.get('ammoQty'); // ammoQty 파라미터 가져오기
+
+        // Simulate scanning and then show confirm button
+        setTimeout(() => {
+            instructionBox.innerHTML = '총기 확인이 완료되었습니다.<br>총기를 가져가고 "확인" 버튼을 눌러주세요.';
+            confirmButton.style.display = 'block'; // Show the button
+        }, 3000); // 3초 후 시뮬레이션 완료
+
+        confirmButton.onclick = function() {
+            if (hasAmmo) {
+                // 탄약도 불출해야 하는 경우: ammoType과 ammoQuantity를 함께 전달
+                window.location.href = `issuance_ammo_retrieve.html?gunType=${gunType}&ammo=${hasAmmo}&ammoQty=${ammoQuantity}`;
+            } else {
+                // 총기만 불출하는 경우: ammoType과 ammoQuantity를 함께 전달 (탄약 없을 수 있음)
+                window.location.href = `issuance_complete.html?gunType=${gunType}&ammo=${hasAmmo}&ammoQty=${ammoQuantity}`;
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>재고 입고/출고 기록 - DASMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 600px; /* 테이블 너비를 위해 max-width 조정 */
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #4C9A2A; /* 녹색 악센트 색상 */
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #3A4740;
+            border-radius: 8px;
+            overflow: hidden; /* border-radius 적용을 위해 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .transaction-table th, .transaction-table td {
+            padding: 12px;
+            border-bottom: 1px solid #4C5950;
+            text-align: center;
+        }
+
+        .transaction-table th {
+            background-color: #4C9A2A; /* 헤더 배경색 */
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .transaction-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .transaction-table tbody tr:hover {
+            background-color: #4A564F;
+        }
+
+        .transaction-table .type-in {
+            color: #00FF7F; /* 입고는 밝은 녹색 */
+        }
+
+        .transaction-table .type-out {
+            color: #FF6347; /* 출고는 밝은 주황색 */
+        }
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #777;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .transaction-table th, .transaction-table td {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+            .back-button {
+                font-size: 1.2em;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2><i class="fas fa-history icon"></i> 재고 입고/출고 기록</h2>
+
+        <table class="transaction-table">
+            <thead>
+                <tr>
+                    <th>날짜</th>
+                    <th>구분</th>
+                    <th>품목</th>
+                    <th>수량</th>
+                    <th>담당자</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2025-07-19 14:30</td>
+                    <td class="type-out">출고</td>
+                    <td>K2 소총</td>
+                    <td>1 정</td>
+                    <td>홍길동</td>
+                </tr>
+                <tr>
+                    <td>2025-07-19 14:30</td>
+                    <td class="type-out">출고</td>
+                    <td>5.56mm 탄약</td>
+                    <td>60 발</td>
+                    <td>홍길동</td>
+                </tr>
+                <tr>
+                    <td>2025-07-18 09:00</td>
+                    <td class="type-in">입고</td>
+                    <td>K2 소총</td>
+                    <td>5 정</td>
+                    <td>관리자A</td>
+                </tr>
+                <tr>
+                    <td>2025-07-18 09:00</td>
+                    <td class="type-in">입고</td>
+                    <td>5.56mm 탄약</td>
+                    <td>500 발</td>
+                    <td>관리자A</td>
+                </tr>
+                <tr>
+                    <td>2025-07-17 18:00</td>
+                    <td class="type-out">출고</td>
+                    <td>K5 권총</td>
+                    <td>1 정</td>
+                    <td>김철수</td>
+                </tr>
+                </tbody>
+        </table>
+
+        <button class="back-button" onclick="history.back()">이전 페이지로</button>
+    </div>
+</body>
+</html>

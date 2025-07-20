@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>긴급 개방 처리 중</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            color: #E74C3C;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .loading-icon {
+            font-size: 4em;
+            color: #F1C40F; /* 주황색 또는 경고색 */
+            animation: spin 2s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .loading-icon {
+                font-size: 3.5em;
+            }
+            p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>긴급 개방 처리 중...</h2>
+        <i class="fas fa-spinner loading-icon"></i>
+        <p>총기함 <span id="cabinetInfo"></span>의 긴급 개방 명령을 전송하고 있습니다.<br>잠시만 기다려주세요.</p>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const cabinetId = urlParams.get('cabinetId');
+        const reason = urlParams.get('reason');
+
+        document.getElementById('cabinetInfo').textContent = cabinetId || '선택된 총기함';
+
+        // 실제 긴급 개방 명령 전송 (백엔드 통신 시뮬레이션)
+        setTimeout(() => {
+            // 성공/실패 여부에 따라 다른 페이지로 이동하거나 메시지 변경
+            // 여기서는 성공했다고 가정하고 완료 페이지로 이동
+            location.href = `emergency_open_complete.html?cabinetId=${cabinetId}&reason=${reason}&status=success`;
+        }, 3000); // 3초 후 완료 페이지로 이동 (실제로는 API 응답 시간에 따라 달라짐)
+    </script>
+</body>
+</html>

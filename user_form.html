@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>사용자 등록/수정/삭제 - DASMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 500px;
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #7D5A3D; /* 브라운 악센트 색상 */
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #CFCFCF;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group input[type="email"],
+        .form-group select {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            border: 1px solid #4F5E54;
+            border-radius: 8px;
+            background-color: #3A4A40;
+            color: #E6E6E6;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="password"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #7D5A3D;
+            box-shadow: 0 0 0 3px rgba(125, 90, 61, 0.5);
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap; /* 버튼이 여러 개일 때 줄바꿈 */
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .action-button {
+            background-color: #4CAF50; /* Add button */
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 45%; /* 버튼 너비 조정 */
+            margin: 5px; /* 버튼 간 간격 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-button.update {
+            background-color: #3498DB; /* Update button */
+        }
+
+        .action-button.delete {
+            background-color: #E74C3C; /* Delete button */
+        }
+
+        .action-button:hover {
+            opacity: 0.9;
+        }
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #777;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .form-group input, .form-group select {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+            .action-button {
+                width: 100%; /* 모바일에서는 버튼을 꽉 채움 */
+                margin: 5px 0;
+                font-size: 1.1em;
+                padding: 12px 18px;
+            }
+            .back-button {
+                font-size: 1.1em;
+                padding: 12px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2><i class="fas fa-user-edit icon"></i> 사용자 등록/수정/삭제</h2>
+
+        <div class="form-group">
+            <label for="userId">사용자 ID:</label>
+            <input type="text" id="userId" placeholder="사용자 ID를 입력하세요 (수정/삭제 시 필요)">
+        </div>
+        <div class="form-group">
+            <label for="userName">이름:</label>
+            <input type="text" id="userName" placeholder="이름을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="userRank">계급:</label>
+            <select id="userRank">
+                <option value="">계급 선택</option>
+                <option value="사병">사병</option>
+                <option value="부사관">부사관</option>
+                <option value="장교">장교</option>
+                <option value="군무원">군무원</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="userUnit">소속 부대:</label>
+            <input type="text" id="userUnit" placeholder="소속 부대를 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="userFingerprintId">지문 ID:</label>
+            <input type="text" id="userFingerprintId" placeholder="지문 인식 등록 시 할당">
+        </div>
+
+        <div class="button-group">
+            <button class="action-button" onclick="registerUser()">
+                <i class="fas fa-user-plus icon"></i> 등록
+            </button>
+            <button class="action-button update" onclick="updateUser()">
+                <i class="fas fa-user-edit icon"></i> 수정
+            </button>
+            <button class="action-button delete" onclick="deleteUser()">
+                <i class="fas fa-user-minus icon"></i> 삭제
+            </button>
+        </div>
+
+        <button class="back-button" onclick="history.back()">이전 페이지로</button>
+    </div>
+
+    <script>
+        function registerUser() {
+            const userId = document.getElementById('userId').value;
+            const userName = document.getElementById('userName').value;
+            const userRank = document.getElementById('userRank').value;
+            const userUnit = document.getElementById('userUnit').value;
+            const userFingerprintId = document.getElementById('userFingerprintId').value;
+
+            if (!userId || !userName || !userRank || !userUnit) {
+                alert('모든 필수 정보를 입력해주세요.');
+                return;
+            }
+            // 실제 환경에서는 서버 API 호출하여 사용자 등록
+            alert(`사용자 등록 요청:\nID: ${userId}\n이름: ${userName}\n계급: ${userRank}\n부대: ${userUnit}\n지문 ID: ${userFingerprintId}`);
+            // 성공 시 입력 필드 초기화
+            resetForm();
+        }
+
+        function updateUser() {
+            const userId = document.getElementById('userId').value;
+            const userName = document.getElementById('userName').value;
+            const userRank = document.getElementById('userRank').value;
+            const userUnit = document.getElementById('userUnit').value;
+            const userFingerprintId = document.getElementById('userFingerprintId').value;
+
+            if (!userId) {
+                alert('수정할 사용자 ID를 입력해주세요.');
+                return;
+            }
+            // 실제 환경에서는 서버 API 호출하여 사용자 정보 수정
+            alert(`사용자 수정 요청:\nID: ${userId}\n이름: ${userName}\n계급: ${userRank}\n부대: ${userUnit}\n지문 ID: ${userFingerprintId}`);
+            resetForm();
+        }
+
+        function deleteUser() {
+            const userId = document.getElementById('userId').value;
+            if (!userId) {
+                alert('삭제할 사용자 ID를 입력해주세요.');
+                return;
+            }
+            if (confirm(`${userId} 사용자를 정말로 삭제하시겠습니까?`)) {
+                // 실제 환경에서는 서버 API 호출하여 사용자 삭제
+                alert(`${userId} 사용자 삭제 요청 완료.`);
+                resetForm();
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('userId').value = '';
+            document.getElementById('userName').value = '';
+            document.getElementById('userRank').value = '';
+            document.getElementById('userUnit').value = '';
+            document.getElementById('userFingerprintId').value = '';
+        }
+
+        // 초기 로드 시 URL 파라미터를 통해 사용자 ID가 넘어왔다면 폼에 채워넣기 (수정 모드용)
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userIdParam = urlParams.get('userId');
+            if (userIdParam) {
+                document.getElementById('userId').value = userIdParam;
+                // 실제 환경에서는 userIdParam을 사용하여 해당 사용자 정보를 서버에서 가져와 폼을 채웁니다.
+                // 예시: fetchUserById(userIdParam).then(data => fillForm(data));
+                alert(`사용자 ID '${userIdParam}'에 대한 정보를 불러와 수정할 수 있습니다.`);
+            }
+        });
+    </script>
+</body>
+</html>

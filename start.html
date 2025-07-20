@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>로봇 제어 시스템</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1F2B24; /* 대시보드 배경색과 유사하게 */
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* 스크롤바 방지 */
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            max-width: 400px; /* 모바일 UI에 적합한 최대 너비 */
+            width: 90%;
+            background-color: #2F3B33; /* 대시보드 메인 콘텐츠 배경색 */
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo-area {
+            margin-bottom: 40px;
+            cursor: pointer; /* 클릭 가능함을 시각적으로 알림 */
+            -webkit-tap-highlight-color: transparent; /* 모바일 탭 하이라이트 제거 */
+        }
+
+        .logo-area img {
+            width: 150px; /* 로고 크기 */
+            height: auto;
+            border-radius: 10px; /* 모서리 둥글게 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-button {
+            width: 80%;
+            padding: 18px 25px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            background-color: #4C9A2A; /* 대시보드 활성 메뉴 색상 */
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-button:active {
+            background-color: #3f7d22; /* 클릭 시 색상 변화 */
+            transform: translateY(2px);
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            .logo-area img {
+                width: 120px;
+            }
+            .main-button {
+                font-size: 1.3em;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-area" id="militaryLogo">
+            <img src="logo.png" alt="국방 마크">
+        </div>
+        <button class="main-button" onclick="location.href='fingerprint.html?mode=user'">사용하기</button>
+    </div>
+
+    <script>
+        const militaryLogo = document.getElementById('militaryLogo');
+        let clickCount = 0;
+        let lastClickTime = 0;
+        const DOUBLE_CLICK_INTERVAL = 300; // 0.3초 내 클릭 시 카운트
+
+        militaryLogo.addEventListener('click', function() {
+            const currentTime = new Date().getTime();
+
+            if (currentTime - lastClickTime < DOUBLE_CLICK_INTERVAL) {
+                clickCount++;
+            } else {
+                clickCount = 1; // 첫 클릭이거나 간격이 너무 길면 초기화
+            }
+            lastClickTime = currentTime;
+
+            console.log('로고 클릭 횟수:', clickCount);
+
+            if (clickCount >= 5) {
+                window.location.href = 'admin_login.html';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>경고 발생 내역 조회 - DASMS</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 800px; /* Wider for tables */
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #7D5A3D;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #3F4B43;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .filter-controls input,
+        .filter-controls select,
+        .filter-controls button {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            background-color: #4A5B52;
+            color: #E6E6E6;
+            font-size: 1em;
+        }
+
+        .filter-controls input::placeholder {
+            color: #BBB;
+        }
+
+        .filter-controls button {
+            background-color: #7D5A3D;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-controls button:hover {
+            background-color: #6C4B2E;
+        }
+
+        .warning-table-container {
+            width: 100%;
+            overflow-x: auto; /* For responsive tables */
+        }
+
+        .warning-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #3F4B43;
+            border-radius: 10px;
+            overflow: hidden; /* Ensures border-radius applies to table */
+        }
+
+        .warning-table th,
+        .warning-table td {
+            padding: 12px 15px;
+            border: 1px solid #4A5B52;
+            text-align: left;
+            font-size: 0.95em;
+        }
+
+        .warning-table th {
+            background-color: #556B60;
+            color: #E6E6E6;
+            font-weight: bold;
+            white-space: nowrap; /* Prevent wrapping of headers */
+        }
+
+        .warning-table tr:nth-child(even) {
+            background-color: #35413A;
+        }
+
+        .warning-table tr:hover {
+            background-color: #4A5B52;
+        }
+
+        .severity-critical { color: #DC3545; font-weight: bold; } /* Red */
+        .severity-major { color: #FFC107; font-weight: bold; }    /* Yellow */
+        .severity-minor { color: #87CEEB; }                        /* SkyBlue */
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #777;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .filter-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .warning-table th,
+            .warning-table td {
+                padding: 8px 10px;
+                font-size: 0.85em;
+            }
+            .back-button {
+                font-size: 1.2em;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>경고 발생 내역 조회</h2>
+
+        <div class="filter-controls">
+            <input type="text" id="warningEquipmentId" placeholder="장비 ID">
+            <select id="warningSeverity">
+                <option value="">심각도 (전체)</option>
+                <option value="critical">심각</option>
+                <option value="major">주요</option>
+                <option value="minor">경미</option>
+            </select>
+            <input type="date" id="warningStartDate">
+            <span>~</span>
+            <input type="date" id="warningEndDate">
+            <button onclick="searchWarnings()">
+                <i class="fas fa-search"></i> 검색
+            </button>
+        </div>
+
+        <div class="warning-table-container">
+            <table class="warning-table">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>장비 ID</th>
+                        <th>발생 일시</th>
+                        <th>심각도</th>
+                        <th>경고 내용</th>
+                        <th>조치 여부</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>EQ-001</td>
+                        <td>2025-07-20 14:30:00</td>
+                        <td class="severity-critical">심각</td>
+                        <td>온도 센서 오류 감지.</td>
+                        <td>미조치</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>EQ-002</td>
+                        <td>2025-07-20 10:15:22</td>
+                        <td class="severity-major">주요</td>
+                        <td>모터 과부하 임계치 초과.</td>
+                        <td>조치 완료</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>EQ-003</td>
+                        <td>2025-07-19 18:05:01</td>
+                        <td class="severity-minor">경미</td>
+                        <td>네트워크 연결 불안정.</td>
+                        <td>조치 완료</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>EQ-001</td>
+                        <td>2025-07-19 09:00:00</td>
+                        <td class="severity-major">주요</td>
+                        <td>예상치 못한 시스템 재시작.</td>
+                        <td>미조치</td>
+                    </tr>
+                    </tbody>
+            </table>
+        </div>
+
+        <button class="back-button" onclick="location.href='admin_alert_management.html'">
+            <i class="fas fa-arrow-left icon"></i> 뒤로가기
+        </button>
+    </div>
+
+    <script>
+        function searchWarnings() {
+            const equipmentId = document.getElementById('warningEquipmentId').value;
+            const severity = document.getElementById('warningSeverity').value;
+            const startDate = document.getElementById('warningStartDate').value;
+            const endDate = document.getElementById('warningEndDate').value;
+
+            // In a real application, you would send these values to a server
+            // to filter the data and update the table.
+            alert(`경고 검색 조건:\n장비 ID: ${equipmentId}\n심각도: ${severity}\n시작일: ${startDate}\n종료일: ${endDate}\n\n(실제 애플리케이션에서는 서버에서 데이터를 필터링하여 표시합니다.)`);
+        }
+    </script>
+</body>
+</html>

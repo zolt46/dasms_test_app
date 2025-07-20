@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>총기함 현황 조회 - DASMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 800px; /* 넓게 설정하여 표를 보기 좋게 함 */
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #4C9A2A; /* 녹색 악센트 색상 */
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .status-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background-color: #3C4740;
+            border-radius: 10px;
+            overflow: hidden; /* border-radius 적용을 위해 */
+        }
+
+        .status-table th, .status-table td {
+            padding: 15px;
+            border: 1px solid #4F5E53;
+            text-align: left;
+            font-size: 1.1em;
+        }
+
+        .status-table th {
+            background-color: #4C9A2A;
+            color: white;
+            font-weight: bold;
+        }
+
+        .status-table tr:nth-child(even) {
+            background-color: #354139;
+        }
+
+        .status-table .status-ok {
+            color: #4CAF50; /* Green */
+            font-weight: bold;
+        }
+
+        .status-table .status-warning {
+            color: #FFC107; /* Amber */
+            font-weight: bold;
+        }
+
+        .status-table .status-error {
+            color: #E74C3C; /* Red */
+            font-weight: bold;
+        }
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #777;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .status-table th, .status-table td {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+            .back-button {
+                font-size: 1.1em;
+                padding: 12px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>총기함 현황 조회</h2>
+
+        <table class="status-table">
+            <thead>
+                <tr>
+                    <th>총기함 ID</th>
+                    <th>위치</th>
+                    <th>상태</th>
+                    <th>총기 수량</th>
+                    <th>탄약 수량</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>CAB-001</td>
+                    <td>본관 1층</td>
+                    <td class="status-ok">정상 <i class="fas fa-check-circle"></i></td>
+                    <td>25/30</td>
+                    <td>1500/2000</td>
+                </tr>
+                <tr>
+                    <td>CAB-002</td>
+                    <td>본관 2층</td>
+                    <td class="status-warning">경고 <i class="fas fa-exclamation-triangle"></i></td>
+                    <td>10/10</td>
+                    <td>500/500</td>
+                </tr>
+                <tr>
+                    <td>CAB-003</td>
+                    <td>별관</td>
+                    <td class="status-error">오류 <i class="fas fa-times-circle"></i></td>
+                    <td>2/30</td>
+                    <td>100/2000</td>
+                </tr>
+                <tr>
+                    <td>CAB-004</td>
+                    <td>훈련장</td>
+                    <td class="status-ok">정상 <i class="fas fa-check-circle"></i></td>
+                    <td>15/15</td>
+                    <td>900/900</td>
+                </tr>
+                </tbody>
+        </table>
+
+        <button class="back-button" onclick="history.back()">이전 페이지로</button>
+    </div>
+</body>
+</html>

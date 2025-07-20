@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>사용자 정보 조회 - DASMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 800px; /* 테이블 너비 고려 */
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #4C9A2A; /* 녹색 악센트 색상 */
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .user-table-container {
+            width: 100%;
+            overflow-x: auto; /* 테이블이 넘칠 경우 스크롤바 */
+            margin-bottom: 30px;
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: #3A4A40;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .user-table th, .user-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #4F5E54;
+            color: #E6E6E6;
+        }
+
+        .user-table th {
+            background-color: #4C9A2A;
+            color: #FFFFFF;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .user-table tbody tr:nth-child(even) {
+            background-color: #34423A;
+        }
+
+        .user-table tbody tr:hover {
+            background-color: #43554B;
+            cursor: pointer;
+        }
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #777;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .user-table th, .user-table td {
+                padding: 8px 10px;
+                font-size: 0.9em;
+            }
+            .back-button {
+                font-size: 1.1em;
+                padding: 12px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2><i class="fas fa-users icon"></i> 사용자 정보 조회</h2>
+
+        <div class="user-table-container">
+            <table class="user-table" id="userListTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>이름</th>
+                        <th>계급</th>
+                        <th>부대</th>
+                        <th>등록일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+
+        <button class="back-button" onclick="history.back()">이전 페이지로</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 실제 환경에서는 서버에서 사용자 데이터를 가져와야 합니다.
+            // 여기서는 임시 데이터를 사용합니다.
+            const users = [
+                { id: 'user001', name: '김철수', rank: '병장', unit: '본부대', regDate: '2023-01-15' },
+                { id: 'user002', name: '이영희', rank: '상병', unit: '1소대', regDate: '2023-03-22' },
+                { id: 'user003', name: '박민수', rank: '일병', unit: '2소대', regDate: '2023-05-10' },
+                { id: 'user004', name: '최지영', rank: '하사', unit: '보급과', regDate: '2022-11-01' },
+                { id: 'user005', name: '정대현', rank: '중사', unit: '경비중대', regDate: '2022-08-20' }
+            ];
+
+            const userListTableBody = document.querySelector('#userListTable tbody');
+
+            users.forEach(user => {
+                const row = userListTableBody.insertRow();
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.rank}</td>
+                    <td>${user.unit}</td>
+                    <td>${user.regDate}</td>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>

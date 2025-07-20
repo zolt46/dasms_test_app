@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>에러 로그 확인 - DASMS</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 700px; /* Wider for log entries */
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #7D5A3D;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .log-entry {
+            background-color: #3F4B43;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .log-entry strong {
+            color: #E6E6E6;
+            margin-right: 8px;
+        }
+
+        .log-entry .timestamp {
+            font-size: 0.9em;
+            color: #AAAAAA;
+            margin-bottom: 5px;
+        }
+
+        .log-entry .error-type {
+            font-weight: bold;
+            color: #FFC107; /* Warning yellow */
+            margin-bottom: 5px;
+        }
+
+        .log-entry.critical .error-type {
+            color: #DC3545; /* Critical red */
+        }
+
+        .log-entry .description {
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #777;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .log-entry {
+                padding: 10px;
+            }
+            .log-entry .timestamp, .log-entry .description {
+                font-size: 0.9em;
+            }
+            .back-button {
+                font-size: 1.2em;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>에러 로그 확인</h2>
+
+        <div class="log-entry critical">
+            <div class="timestamp"><i class="far fa-clock"></i> 2025-07-20 14:28:10</div>
+            <div class="error-type"><i class="fas fa-exclamation-triangle"></i> CRITICAL - 장비 EQ-002</div>
+            <div class="description">컨베이어 벨트 모터 과열 감지. 즉시 점검 필요.</div>
+        </div>
+
+        <div class="log-entry">
+            <div class="timestamp"><i class="far fa-clock"></i> 2025-07-20 10:15:22</div>
+            <div class="error-type"><i class="fas fa-info-circle"></i> WARNING - 장비 EQ-001</div>
+            <div class="description">로봇 팔 엔드 이펙터 압력 센서 이상치 감지.</div>
+        </div>
+
+        <div class="log-entry">
+            <div class="timestamp"><i class="far fa-clock"></i> 2025-07-19 18:05:01</div>
+            <div class="error-type"><i class="fas fa-info-circle"></i> INFO - 장비 EQ-003</div>
+            <div class="description">전력 공급 불안정 감지. 단시간 내 정상 복구됨.</div>
+        </div>
+        
+        <button class="back-button" onclick="location.href='admin_equipment_management.html'">
+            <i class="fas fa-arrow-left icon"></i> 뒤로가기
+        </button>
+    </div>
+</body>
+</html>

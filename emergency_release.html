@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>긴급 개방 해제 - DASMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 500px;
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #E74C3C; /* 긴급 상황에 어울리는 붉은색 */
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .info-box {
+            background-color: #3C4740;
+            border: 1px solid #7D5A3D;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: left;
+        }
+
+        .info-box p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        .info-box strong {
+            color: #E6E6E6;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: #A0A0A0;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #4F5E53;
+            background-color: #3C4740;
+            color: #E6E6E6;
+            font-size: 1em;
+            box-sizing: border-box;
+            -webkit-appearance: none; /* 기본 select 스타일 제거 */
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23E6E6E6%22%20d%3D%22M287%2C197.3L159.5%2C69.8c-4.7-4.7-12.3-4.7-17%2C0L5.4%2C197.3c-4.7%2C4.7-4.7%2C12.3%2C0%2C17l8.5%2C8.5c4.7%2C4.7%2C12.3%2C4.7%2C17%2C0l118.8-118.7l118.7%2C118.7c4.7%2C4.7%2C12.3%2C4.7%2C17%2C0l8.5-8.5C291.7%2C209.6%2C291.7%2C202%2C287%2C197.3z%22%2F%3E%3C%2Fsvg%3E'); /* 사용자 정의 화살표 */
+            background-repeat: no-repeat;
+            background-position: right 12px top 50%;
+            background-size: 12px auto;
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: #E74C3C;
+            box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.5);
+        }
+
+        .action-button {
+            background-color: #E74C3C; /* 붉은색 */
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-button:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .action-button:active {
+            transform: translateY(2px);
+        }
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #777;
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .info-box p, .form-group label, .form-group select {
+                font-size: 1em;
+            }
+            .action-button, .back-button {
+                font-size: 1.2em;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>긴급 개방 해제</h2>
+
+        <div class="info-box">
+            <p><i class="fas fa-exclamation-triangle" style="color: #FFC107; margin-right: 8px;"></i> 현재 긴급 개방 상태인 총기함 목록입니다. 해제할 총기함을 선택하고 조치를 취해주세요.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="emergencyCabinet">긴급 개방된 총기함 선택:</label>
+            <select id="emergencyCabinet">
+                <option value="">총기함을 선택하세요</option>
+                <option value="CAB-003">CAB-003 (별관) - 오류</option>
+                </select>
+        </div>
+
+        <button class="action-button" onclick="releaseEmergencyOpen()">긴급 개방 해제</button>
+        <button class="back-button" onclick="history.back()">이전 페이지로</button>
+    </div>
+
+    <script>
+        function releaseEmergencyOpen() {
+            const selectedCabinet = document.getElementById('emergencyCabinet').value;
+
+            if (selectedCabinet === "") {
+                alert('긴급 개방을 해제할 총기함을 선택해주세요.');
+                return;
+            }
+
+            if (confirm(`${selectedCabinet} 총기함의 긴급 개방 상태를 해제하시겠습니까?`)) {
+                // 실제 환경에서는 백엔드 API를 호출하여 긴급 개방 상태를 해제해야 합니다.
+                // 여기서는 시뮬레이션으로 성공 메시지를 보여줍니다.
+                alert(`${selectedCabinet} 총기함의 긴급 개방이 성공적으로 해제되었습니다.`);
+                // 해제 후 관리자 메인 페이지나 총기함 관리 페이지로 리다이렉트
+                window.location.href = 'admin_main.html';
+            }
+        }
+    </script>
+</body>
+</html>

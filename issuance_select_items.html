@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>불출 물품 선택</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 500px;
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .quote-box {
+            background-color: #3F4F45;
+            border: 1px solid #4A5C50;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .quote-box h3 {
+            color: #7D5A3D;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .quote-box p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #CCCCCC;
+        }
+
+        h2 {
+            color: #4C9A2A;
+            margin-bottom: 25px;
+            font-size: 2em;
+        }
+
+        .input-group {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: #A0D468;
+            font-weight: bold;
+        }
+
+        .input-group select,
+        .input-group input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #4A5C50;
+            background-color: #3F4F45;
+            color: #E6E6E6;
+            font-size: 1em;
+            box-sizing: border-box;
+            -webkit-appearance: none; /* iOS Safari */
+            -moz-appearance: none; /* Firefox */
+            appearance: none; /* Other browsers */
+        }
+
+        .input-group select {
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23E6E6E6%22%20d%3D%22M287%2C197.3L159.2%2C69.5c-3.1-3.1-8.2-3.1-11.3%2C0L5.4%2C197.3c-3.1%2C3.1-3.1%2C8.2%2C0%2C11.3s8.2%2C3.1%2C11.3%2C0L144.5%2C86.7c3.1-3.1%2C8.2-3.1%2C11.3%2C0l127.8%2C127.8c3.1%2C3.1%2C8.2%2C3.1%2C11.3%2C0C290.1%2C205.5%2C290.1%2C200.4%2C287%2C197.3z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 12px;
+        }
+
+        .button-group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-button {
+            padding: 15px 25px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background-color: #5A6D63;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-button:active {
+            background-color: #4A5C50;
+            transform: translateY(2px);
+        }
+
+        #dutyIssuanceButton {
+            background-color: #7D5A3D; /* 근무자 불출 버튼 색상 다르게 */
+        }
+
+        #dutyIssuanceButton:active {
+            background-color: #6A4D32;
+        }
+
+        .back-button {
+            margin-top: 30px;
+            padding: 12px 25px;
+            font-size: 1em;
+            color: white;
+            background-color: #5A6D63;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-button:active {
+            background-color: #4A5C50;
+            transform: translateY(2px);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .quote-box {
+                padding: 15px;
+            }
+            .quote-box h3 {
+                font-size: 1.1em;
+            }
+            .quote-box p {
+                font-size: 1em;
+            }
+            .input-group label {
+                font-size: 1em;
+            }
+            .input-group select,
+            .input-group input[type="number"] {
+                font-size: 0.95em;
+                padding: 10px;
+            }
+            .action-button {
+                font-size: 1.1em;
+                padding: 12px 20px;
+            }
+            .back-button {
+                font-size: 0.9em;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="quote-box">
+            <h3>적의 심장부를 꿰뚫는 용기<br>그대 손에 쥐어진 조국 수호의 의지!</h3>
+            <p>오늘도 그대가 있기에<br>우리는 승리할 수 있습니다</p>
+        </div>
+
+        <h2>불출 물품 선택</h2>
+
+        <div class="input-group">
+            <label for="gunType">총기 선택:</label>
+            <select id="gunType">
+                <option value="">총기 미선택</option>
+                <option value="personal_rifle">개인화기 (K2 소총)</option>
+                <option value="squad_machinegun">분대 공용 화기 (K3 기관총)</option>
+                <option value="sidearm">보조 화기 (K5 권총)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label for="ammoQuantity">탄약 수량 (발):</label>
+            <input type="number" id="ammoQuantity" min="0" value="0">
+        </div>
+
+        <div class="button-group">
+            <button class="action-button" id="dutyIssuanceButton">
+                근무자 총기 불출 (개인화기 + 정해진 탄약)
+            </button>
+            <button class="action-button" onclick="proceedIssuance()">
+                불출 진행
+            </button>
+        </div>
+
+        <button class="back-button" onclick="history.back()">이전 페이지로</button>
+    </div>
+
+    <script>
+        document.getElementById('dutyIssuanceButton').addEventListener('click', function() {
+            // 근무자 총기 불출 시 자동으로 설정 (예시 데이터)
+            document.getElementById('gunType').value = 'personal_rifle';
+            document.getElementById('ammoQuantity').value = 60; // 예시로 60발 지정
+            // 여기서 proceedIssuance()를 호출하지 않습니다.
+        });
+
+        function proceedIssuance() {
+            const gunType = document.getElementById('gunType').value;
+            const ammoQuantity = parseInt(document.getElementById('ammoQuantity').value);
+
+            let hasGun = gunType !== '';
+            let hasAmmo = ammoQuantity > 0;
+
+            if (!hasGun && !hasAmmo) {
+                alert('불출할 총기나 탄약을 선택해주세요.');
+                return;
+            }
+
+            let nextUrl;
+            if (hasGun) {
+                // 총기가 선택된 경우 총기 불출 페이지로 이동
+                nextUrl = `issuance_gun_retrieve.html?gunType=${gunType}&ammo=${hasAmmo}&ammoQty=${ammoQuantity}`;
+            } else if (hasAmmo) {
+                // 총기 없이 탄약만 선택된 경우 탄약 불출 페이지로 이동
+                nextUrl = `issuance_ammo_retrieve.html?ammo=${hasAmmo}&ammoQty=${ammoQuantity}`;
+            }
+            
+            window.location.href = nextUrl;
+        }
+    </script>
+</body>
+</html>

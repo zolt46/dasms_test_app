@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>관리자 로그인</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 380px;
+            width: 90%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        h2 {
+            color: #7D5A3D; /* 브라운 악센트 색상 */
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: #E6E6E6;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: calc(100% - 20px); /* 패딩 고려 */
+            padding: 12px 10px;
+            border: 1px solid #4A5C50;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #E6E6E6;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="password"]:focus {
+            border-color: #4C9A2A;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px 25px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: white;
+            background-color: #4C9A2A;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+
+        .login-button:active {
+            background-color: #3f7d22;
+            transform: translateY(2px);
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 0.95em;
+            color: #E6E6E6;
+            min-height: 20px; /* 메시지 영역 확보 */
+        }
+
+        .back-button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            color: white;
+            background-color: #5A6D63;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-button:active {
+            background-color: #4A5C50;
+            transform: translateY(2px);
+        }
+
+        /* 모바일 최적화 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            .form-group label {
+                font-size: 1em;
+            }
+            .form-group input {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+            .login-button {
+                font-size: 1.1em;
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>관리자 로그인</h2>
+        <form id="adminLoginForm">
+            <div class="form-group">
+                <label for="adminId">관리자 ID:</label>
+                <input type="text" id="adminId" name="adminId" required placeholder="ID를 입력하세요">
+            </div>
+            <div class="form-group">
+                <label for="adminPassword">비밀번호:</label>
+                <input type="password" id="adminPassword" name="adminPassword" required placeholder="비밀번호를 입력하세요">
+            </div>
+            <button type="submit" class="login-button">로그인</button>
+        </form>
+        <div class="message" id="loginMessage"></div>
+        <button class="back-button" onclick="location.href='start.html'">메인으로 돌아가기</button>
+    </div>
+
+    <script>
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const loginMessage = document.getElementById('loginMessage');
+
+        // 예시 관리자 정보 (실제 환경에서는 서버에서 검증해야 합니다!)
+        const ADMIN_ID = 'admin';
+        const ADMIN_PW = '1234';
+
+        adminLoginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const inputId = document.getElementById('adminId').value;
+            const inputPw = document.getElementById('adminPassword').value;
+
+            if (inputId === ADMIN_ID && inputPw === ADMIN_PW) {
+                loginMessage.textContent = '로그인 성공! 지문 인식 페이지로 이동합니다.';
+                loginMessage.style.color = '#4C9A2A';
+                setTimeout(() => {
+                    // 로그인 성공 시 mobile_fingerprint.html로 mode=admin 파라미터와 함께 이동
+                    window.location.href = 'fingerprint.html?mode=admin';
+                }, 1500);
+            } else {
+                loginMessage.textContent = 'ID 또는 비밀번호가 올바르지 않습니다. 다시 시도해주세요.';
+                loginMessage.style.color = '#e74c3c';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>긴급 개방 요청</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #1F2B24;
+            color: #E6E6E6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 500px;
+            width: 95%;
+            background-color: #2F3B33;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #E74C3C; /* 긴급 상황을 나타내는 붉은색 */
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: #ccc;
+        }
+
+        .form-group select {
+            width: calc(100% - 20px);
+            padding: 12px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #3C4A42;
+            color: #E6E6E6;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .action-button {
+            background-color: #E74C3C; /* 붉은색 */
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 10px; /* 버튼 간 간격 조정 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-button:hover {
+            background-color: #C0392B;
+            transform: translateY(-2px);
+        }
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #777;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .action-button, .back-button {
+                font-size: 1.1em;
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>긴급 개방 요청</h2>
+
+        <div class="form-group">
+            <label for="cabinetId">긴급 개방할 총기함 선택:</label>
+            <select id="cabinetId">
+                <option value="">총기함 선택</option>
+                <option value="cabinet_001">총기함 001 (본관 1층)</option>
+                <option value="cabinet_002">총기함 002 (본관 2층)</option>
+                <option value="cabinet_003">총기함 003 (별관)</option>
+            </select>
+        </div>
+
+        <button class="action-button" onclick="requestEmergencyOpen('single')">선택 총기함 긴급 개방</button>
+        <button class="action-button" onclick="requestEmergencyOpen('all')">전체 총기함 긴급 개방</button>
+        <button class="back-button" onclick="history.back()">이전 페이지로</button>
+    </div>
+
+    <script>
+        function requestEmergencyOpen(mode) {
+            let cabinetId = '';
+            let message = '';
+
+            if (mode === 'single') {
+                cabinetId = document.getElementById('cabinetId').value;
+                if (cabinetId === "") {
+                    alert('긴급 개방할 총기함을 선택해주세요.');
+                    return;
+                }
+                message = `${cabinetId} 총기함에 대한 긴급 개방을 요청합니다.`;
+            } else if (mode === 'all') {
+                cabinetId = 'all_cabinets'; // 전체 개방을 나타내는 특별한 값
+                message = `전체 총기함에 대한 긴급 개방을 요청합니다.`;
+            }
+            
+            alert(message);
+            // 실제 환경에서는 이 시점에서 백엔드 API를 호출하여 긴급 개방 명령을 전송합니다.
+            // 성공/실패 여부에 따라 다음 페이지로 이동합니다.
+            
+            // 시뮬레이션을 위해 바로 processing 페이지로 이동
+            location.href = `emergency_open_processing.html?cabinetId=${cabinetId}`;
+        }
+    </script>
+</body>
+</html>
